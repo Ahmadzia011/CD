@@ -1,0 +1,13 @@
+name: CI/CD Pipeline
+on: [pus]
+
+jobs:
+  build:
+    runs-on: ubuntu:latest
+
+    uses: actions/checkout@v4
+
+    - run: docker compose up --build
+    - run: curl -I http://localhost/
+    - run: curl -I http://localhost/api/items/
+
