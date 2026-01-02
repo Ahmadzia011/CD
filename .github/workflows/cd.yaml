@@ -3,11 +3,10 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu:latest
-
-    uses: actions/checkout@v4
-
-    - run: docker compose up --build
-    - run: curl -I http://localhost/
-    - run: curl -I http://localhost/api/items/
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v4
+        - run: docker compose up -d --build
+        - run: curl -I http://localhost/
+        - run: curl -I http://localhost/api/items/
 
