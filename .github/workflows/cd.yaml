@@ -9,6 +9,7 @@ jobs:
         - run: docker compose up -d --build --wait
         - if: failure()
           run: |
+           systemctl start mysql
            docker compose exec -T mysql mysql -uroot -pahmadzia -e "CREATE DATABASE IF NOT EXISTS university;"
            docker compose up
            docker compose logs cd-backend-1
