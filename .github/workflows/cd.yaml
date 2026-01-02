@@ -9,7 +9,7 @@ jobs:
         - run: docker compose up -d --build --wait
         - if: failure()
           run: |
-           mysql --protocol=tcp -h localhost -uroot -pahmadzia -e "CREATE DATABASE university;
+           docker compose exec -T mysql mysql -uroot -pahmadzia -e "CREATE DATABASE IF NOT EXISTS university;"
            docker compose up
            docker compose logs cd-backend-1
            curl -I http://localhost/ || true
