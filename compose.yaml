@@ -1,0 +1,38 @@
+services:
+  home:
+    build: ./frontend/home
+
+  dashboard:
+    build: ./frontend/dashboard
+
+  backend:
+    build: ./backend
+    depends_on:
+     database:
+       condition: service_healthy
+
+
+  proxy:
+    build: ./proxy
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+ 
+  database:
+    image: mysql:latest
+    ports:
+      - "3306"
+    volumes:
+      - myvolume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ahmadzia
+      MYSQL_DATABASE: university
+
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -uroot -p$$MYSQL_ROOT_PASSWORD -h localhost"]
+      start_period: 15s
+      retries: 3
+
+volumes:
+  myvolume: 
