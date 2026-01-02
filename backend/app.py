@@ -24,7 +24,10 @@ class Item(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-               
+
+
+    with app.app_context():
+    db.create_all()
 
 # ---------------------------
 # ROUTES
@@ -47,8 +50,7 @@ def create_item():
 
 
 
-with app.app_context():
-    db.create_all()
+
 
 
 
