@@ -7,8 +7,9 @@ jobs:
     steps:
         - uses: actions/checkout@v4
         - run: docker compose up -d --build --wait
+        - run: mysql --protocol=tcp -h localhost -uroot -pahmadzia -e "CREATE DATABASE university;
+        - run: docker compose up
         - if: failure()
           run: docker logs cd-backend-1
         - run: curl -I http://localhost/
         - run: curl -I http://localhost/api/items/
-
