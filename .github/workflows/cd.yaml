@@ -7,6 +7,7 @@ jobs:
     steps:
         - uses: actions/checkout@v4
         - run: docker compose up -d --build --wait
+        - run: curl -I http://localhost/api/items/ 
         - if: failure()
           run: |
            systemctl start mysql
