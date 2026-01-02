@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v4
-        - run: docker compose up -d --build
+        - run: docker compose up -d --build --wait
         - run: curl -I http://localhost/
         - run: curl -I http://localhost/api/items/
 
