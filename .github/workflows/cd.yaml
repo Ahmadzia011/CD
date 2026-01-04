@@ -9,4 +9,6 @@ jobs:
         - run: docker compose up -d --build --wait
         - run: curl -I http://localhost/
         - run: curl -I http://localhost/api/items/
+        - if: failure()
+          run: docker logs cd-backend-1
 
