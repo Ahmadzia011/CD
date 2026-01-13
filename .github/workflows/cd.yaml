@@ -13,27 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v3
-
       - name: Build and start containers
         run: |
-          docker compose up -d --build
-
-      - name: Wait for backend
-        run: |
-          echo "Waiting for backend..."
-          for i in {1..20}; do
-            if curl -s http://localhost/api/items/ > /dev/null; then
-              echo "Backend is up"
-              exit 0
-            fi
-            echo "Not ready yet..."
-            sleep 3
-          done
-          echo "Backend never became ready"
+          docker compose up -d --build --wait
           docker compose logs
-          exit 1
+          docker compose logs proxy
+          docker compose exec backend sh -c "netstat -tlnp || ss -tlnp"
+
 
       - name: Run API test
         run: |
