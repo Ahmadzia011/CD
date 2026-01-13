@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import OperationalError
 import time 
 
 app = Flask(__name__)
@@ -16,6 +17,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
+
 # ---------------------------
 # MODEL (TABLE)
 # ---------------------------
@@ -25,6 +27,24 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
                
+
+
+MAX_RETRIES = 10
+RETRY_DELAY = 3
+
+for i in range(MAX_RETRIES):
+    try:
+        with app.app_context():
+            db.create_all()
+        print("Database connected")
+        break
+    except OperationalError as e:
+        print(f"DB not ready ({i+1}/{MAX_RETRIES})...")
+        time.sleep(RETRY_DELAY)
+else:
+    raise RuntimeError("Database never became ready")
+
+
 
 # ---------------------------
 # ROUTES
@@ -43,12 +63,6 @@ def create_item():
     db.session.add(item)
     db.session.commit()
     return {"message": "Item inserted"}
-
-
-
-
-with app.app_context():
-    db.create_all()
 
 
 
