@@ -24,7 +24,7 @@ jobs:
 
       - name: Run API test
         run: |
-          sleep 3s 
+          sleep 10s 
           curl -vf http://localhost/
           curl -vf http://localhost/api/items/
 
