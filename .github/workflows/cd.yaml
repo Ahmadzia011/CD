@@ -24,7 +24,7 @@ jobs:
         run: |
           echo "Waiting for backend..."
           for i in {1..20}; do
-            if curl -s http://localhost/api/items > /dev/null; then
+            if curl -s http://localhost/api/items/ > /dev/null; then
               echo "Backend is up"
               exit 0
             fi
@@ -37,7 +37,8 @@ jobs:
 
       - name: Run API test
         run: |
-          curl -f http://localhost/api/items
+          curl -f http://localhost/
+          curl -f http://localhost/api/items/
 
       - name: Shut down
         if: always()
