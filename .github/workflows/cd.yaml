@@ -23,7 +23,7 @@ jobs:
 
 
       - name: Run API test
-        run: |
+        run: | #Sleep gives the time to backend's internal retry login to complete.
           sleep 10s 
           curl -vf http://localhost/
           curl -vf http://localhost/api/items/
