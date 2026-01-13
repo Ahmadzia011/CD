@@ -29,21 +29,15 @@ class Item(db.Model):
                
 
 
-MAX_RETRIES = 10
-RETRY_DELAY = 3
-
-for i in range(MAX_RETRIES):
+for i in range(10):
     try:
         with app.app_context():
             db.create_all()
         print("Database connected")
         break
     except OperationalError as e:
-        print(f"DB not ready ({i+1}/{MAX_RETRIES})...")
-        time.sleep(RETRY_DELAY)
-else:
-    raise RuntimeError("Database never became ready")
-
+         print(e)
+         time.sleep(10)
 
 
 # ---------------------------
