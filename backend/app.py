@@ -29,15 +29,15 @@ class Item(db.Model):
                
 
 
-#for i in range(10):
- #   try:
-with app.app_context():
-    db.create_all()
-    #    print("Database connected")
-     #   break
-    #except OperationalError as e:
-     #    print(e)
-      #   time.sleep(10)
+for i in range(10):
+    try:
+        with app.app_context():
+            db.create_all()
+        print("Database connected")
+        break
+    except OperationalError as e:
+        print(e)
+        time.sleep(10)
 
 
 # ---------------------------
