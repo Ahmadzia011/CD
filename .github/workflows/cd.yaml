@@ -18,11 +18,13 @@ jobs:
           docker compose up -d --build --wait
           docker compose logs
           docker compose logs proxy
-          docker compose exec backend sh -c "netstat -tlnp || ss -tlnp"
+          docker compose exec backend sh -c "echo working"
+          
 
 
       - name: Run API test
         run: |
+          sleep 20s 
           curl -vf http://localhost/
           curl -vf http://localhost/api/items/
 
