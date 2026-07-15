@@ -1,4 +1,4 @@
-# CD
+# Nginx Reverse Proxy
 
 This repository contains a multi-service project (compose-based) with backend, frontend, and proxy components. It's organized for local development and deployment with Docker Compose.
 
